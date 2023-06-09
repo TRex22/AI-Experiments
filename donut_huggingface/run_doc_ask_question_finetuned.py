@@ -26,14 +26,14 @@ def process_image(image_array):
         dev = torch.device("cuda")
 
     dtype = torch.bfloat16
-    return torch.tensor(np.array(image_array)).to(dev, dtype=dtype)
+    return torch.tensor(np.array(image_array)).to(dev, dtype=dtype).unsqueeze(0)
 
 def demo_process_vqa(input_img, question):
     global pretrained_model, task_prompt, task_name
 
     input_img = process_image(Image.fromarray(input_img))
     user_prompt = task_prompt.replace("{user_input}", question)
-    output = pretrained_model.inference(input_img, prompt=user_prompt)["predictions"][0]
+    output = pretrained_model.inference(image=None, image_tensors=input_img, prompt=user_prompt)["predictions"][0]
 
     return output
 
@@ -41,7 +41,7 @@ def demo_process(input_img):
     global pretrained_model, task_prompt, task_name
 
     input_img = process_image(Image.fromarray(input_img))
-    output = pretrained_model.inference(image=input_img, prompt=task_prompt)["predictions"][0]
+    output = pretrained_model.inference(image=None, image_tensors=input_img, prompt=task_prompt)["predictions"][0]
 
     return output
 
@@ -59,11 +59,16 @@ else:  # rvlcdip, cord, ...
 pretrained_model = DonutModel.from_pretrained(args.pretrained_path, ignore_mismatched_sizes=True)
 
 if torch.cuda.is_available():
-   pretrained_model.half()
-   device = torch.device("cuda")
-   pretrained_model.to(device, dtype=torch.bfloat16)
-else:
-   pretrained_model.encoder.to(torch.bfloat16)
+    pretrained_model.half()
+    device = torch.device("cuda")
+    pretrained_model.to(device, dtype=torch.bfloat16)
+
+# if torch.cuda.is_available():
+#    pretrained_model.half()
+#    device = torch.device("cuda")
+#    pretrained_model.to(device, dtype=torch.bfloat16)
+# else:
+#    pretrained_model.encoder.to(torch.bfloat16)
 
 #pretrained_model.half()
 #pretrained_model.encoder.to(torch.bfloat16)
