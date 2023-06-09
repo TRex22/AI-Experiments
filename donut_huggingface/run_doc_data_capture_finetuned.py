@@ -21,23 +21,22 @@ torch.autograd.profiler.emit_nvtx(False)
 
 torch.set_float32_matmul_precision('high')
 
+resolution = None
 # resolution = [2560, 1920] # ±24 GB of RAM
-# resolution = [1280, 960] # ±6GB of RAM
-resolution = [960, 960] # ±6GB of RAM
+resolution = [1280, 960] # ±6GB of RAM
+# resolution = [960, 960] # ±6GB of RAM
 
-# Optimisations
-# https://betterprogramming.pub/how-to-make-your-pytorch-code-run-faster-93079f3c1f7b
-# TODO: Make configurable
-torch.backends.cudnn.benchmark = True # Initial training steps will be slower
-torch.autograd.set_detect_anomaly(False)
-torch.autograd.profiler.profile(False)
-torch.autograd.profiler.emit_nvtx(False)
+# Will need to disable image_tensors.half() in the model code in main repo
+def process_image(image_array):
+    dev = torch.device("cpu")
+    if torch.cuda.is_available():
+        dev = torch.device("cuda")
 
-torch.set_float32_matmul_precision('high')
+    dtype = torch.bfloat16
 
-# resolution = [2560, 1920] # ±24 GB of RAM
-# resolution = [1280, 960] # ±6GB of RAM
-resolution = [1920, 1440]
+    image_array.resize((resolution[0], resolution[1]), Image.Resampling.LANCZOS)
+    processed_image_array = pretrained_model.encoder.prepare_input(image_array).unsqueeze(0)
+    return torch.tensor(np.array(processed_image_array)).to(dev, dtype=dtype)
 
 def demo_process_vqa(input_img, question):
     global pretrained_model, task_prompt, task_name
