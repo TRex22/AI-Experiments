@@ -26,7 +26,9 @@ def process_image(image_array):
         dev = torch.device("cuda")
 
     dtype = torch.bfloat16
-    return torch.tensor(np.array(image_array)).to(dev, dtype=dtype).unsqueeze(0)
+
+    processed_image_array = pretrained_model.encoder.prepare_input(image_array).unsqueeze(0)
+    return torch.tensor(np.array(processed_image_array)).to(dev, dtype=dtype)
 
 def demo_process_vqa(input_img, question):
     global pretrained_model, task_prompt, task_name
