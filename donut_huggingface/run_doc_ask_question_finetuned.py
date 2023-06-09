@@ -5,6 +5,7 @@
 import argparse
 import gradio as gr
 import torch
+import numpy as np
 from PIL import Image
 
 from donut import DonutModel
@@ -15,7 +16,7 @@ def process_image(image_array):
         dev = torch.device("cuda")
 
     dtype = torch.bfloat16
-    return torch.tensor(image_array).to(dev, dtype=dtype)
+    return torch.tensor(np.array(image_array)).to(dev, dtype=dtype)
 
 def demo_process_vqa(input_img, question):
     global pretrained_model, task_prompt, task_name
