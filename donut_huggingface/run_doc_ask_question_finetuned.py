@@ -20,6 +20,7 @@ torch.autograd.profiler.emit_nvtx(False)
 
 torch.set_float32_matmul_precision('high')
 
+# Will need to disable image_tensors.half() in the model code in main repo
 def process_image(image_array):
     dev = torch.device("cpu")
     if torch.cuda.is_available():
@@ -58,7 +59,8 @@ if "docvqa" == task_name:
 else:  # rvlcdip, cord, ...
     task_prompt = f"<s_{task_name}>"
 
-pretrained_model = DonutModel.from_pretrained(args.pretrained_path, ignore_mismatched_sizes=True)
+# pretrained_model = DonutModel.from_pretrained(args.pretrained_path, ignore_mismatched_sizes=True)
+pretrained_model = DonutModel.from_pretrained(args.pretrained_path)
 
 if torch.cuda.is_available():
     pretrained_model.half()
