@@ -10,6 +10,16 @@ from PIL import Image
 
 from donut import DonutModel
 
+# Optimisations
+# https://betterprogramming.pub/how-to-make-your-pytorch-code-run-faster-93079f3c1f7b
+# TODO: Make configurable
+torch.backends.cudnn.benchmark = True # Initial training steps will be slower
+torch.autograd.set_detect_anomaly(False)
+torch.autograd.profiler.profile(False)
+torch.autograd.profiler.emit_nvtx(False)
+
+torch.set_float32_matmul_precision('high')
+
 def process_image(image_array):
     dev = torch.device("cpu")
     if torch.cuda.is_available():
