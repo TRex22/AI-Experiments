@@ -22,8 +22,7 @@ torch.autograd.profiler.emit_nvtx(False)
 torch.set_float32_matmul_precision('high')
 
 # resolution = [2560, 1920] # ±24 GB of RAM
-# resolution = [1280, 960] # ±6GB of RAM
-resolution = [1920, 1440]
+resolution = [1280, 960] # ±6GB of RAM
 
 # Will need to disable image_tensors.half() in the model code in main repo
 def process_image(image_array):
