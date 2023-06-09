@@ -1,0 +1,4 @@
+https://github.com/clovaai/donut
+https://towardsdatascience.com/ocr-free-document-understanding-with-donut-1acfbdf099be
+https://colab.research.google.com/drive/1Z4WG8Wunj3HE0CERjt608ALSgSzRC9ig?usp=sharing&pli=1&authuser=2
+https://huggingface.co/docs/transformers/main/en/model_doc/donut

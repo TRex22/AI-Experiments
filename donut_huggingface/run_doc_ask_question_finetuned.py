@@ -16,7 +16,6 @@ def demo_process_vqa(input_img, question):
     output = pretrained_model.inference(input_img, prompt=user_prompt)["predictions"][0]
     return output
 
-
 def demo_process(input_img):
     global pretrained_model, task_prompt, task_name
     input_img = Image.fromarray(input_img)
