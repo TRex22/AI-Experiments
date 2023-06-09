@@ -21,8 +21,8 @@ torch.autograd.profiler.emit_nvtx(False)
 
 torch.set_float32_matmul_precision('high')
 
-# resolution = [2560, 1920] # ±24 GB of RAM
-resolution = [1280, 960] # ±6GB of RAM
+resolution = [2560, 1920] # ±24 GB of RAM
+# resolution = [1280, 960] # ±6GB of RAM
 
 # Optimisations
 # https://betterprogramming.pub/how-to-make-your-pytorch-code-run-faster-93079f3c1f7b
