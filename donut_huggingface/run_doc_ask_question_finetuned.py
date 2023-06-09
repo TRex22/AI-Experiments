@@ -6,6 +6,7 @@ import argparse
 import gradio as gr
 import torch
 import numpy as np
+
 from PIL import Image
 
 from donut import DonutModel
@@ -20,6 +21,8 @@ torch.autograd.profiler.emit_nvtx(False)
 
 torch.set_float32_matmul_precision('high')
 
+resolution = [1280, 960]
+
 # Will need to disable image_tensors.half() in the model code in main repo
 def process_image(image_array):
     dev = torch.device("cpu")
@@ -28,6 +31,7 @@ def process_image(image_array):
 
     dtype = torch.bfloat16
 
+    image_array.resize((resolution[0], resolution[1]), Image.Resampling.LANCZOS)
     processed_image_array = pretrained_model.encoder.prepare_input(image_array).unsqueeze(0)
     return torch.tensor(np.array(processed_image_array)).to(dev, dtype=dtype)
 
@@ -60,7 +64,8 @@ else:  # rvlcdip, cord, ...
     task_prompt = f"<s_{task_name}>"
 
 # pretrained_model = DonutModel.from_pretrained(args.pretrained_path, ignore_mismatched_sizes=True)
-pretrained_model = DonutModel.from_pretrained(args.pretrained_path)
+# pretrained_model = DonutModel.from_pretrained(args.pretrained_path, input_size=[2560, 1920])
+pretrained_model = DonutModel.from_pretrained(args.pretrained_path, input_size=resolution, ignore_mismatched_sizes=True)
 
 if torch.cuda.is_available():
     pretrained_model.half()
