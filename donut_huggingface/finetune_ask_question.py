@@ -55,7 +55,7 @@ print(ds_builder.info)
 
 print(dataset["validation"][0])
 print(dataset["validation"][-1])
-image = Image.open(dataset["validation"][0]["path"])
+# image = Image.open(dataset["validation"][0]["path"])
 
 # https://huggingface.co/datasets/boomb0om/watermarks-validation/raw/main/clean/008quhpf1wmpzbzb.jpg
 # https://huggingface.co/datasets/boomb0om/watermarks-validation/resolve/main/clean/008quhpf1wmpzbzb.jpg
