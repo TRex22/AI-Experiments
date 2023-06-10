@@ -9,6 +9,8 @@
 # for example, [{"question" : "what is the model name?", "answer" : "donut"},
 # {"question" : "what is the model name?", "answer" : "document understanding transformer"}].
 
+import requests
+
 import json
 import argparse
 import gradio as gr
@@ -52,10 +54,17 @@ print(ds_builder.info.features)
 print(ds_builder.info)
 
 print(dataset["validation"][0])
+print(dataset["validation"][-1])
+image = Image.open(dataset["validation"][0]["path"])
+
+# https://huggingface.co/datasets/boomb0om/watermarks-validation/raw/main/clean/008quhpf1wmpzbzb.jpg
+# https://huggingface.co/datasets/boomb0om/watermarks-validation/resolve/main/clean/008quhpf1wmpzbzb.jpg
 
 def generate_correct_data_structure(dataset, split_name):
     lines = []
     images = []
+
+    base_path = "https://huggingface.co/datasets/boomb0om/watermarks-validation/resolve/main"
 
     for item in dataset[split_name]:
         images.append(item["path"])
@@ -68,12 +77,17 @@ def generate_correct_data_structure(dataset, split_name):
             line = {"file_name": images[i], "ground_truth": json.dumps(question)}
             f.write(json.dumps(line) + "\n")
 
-    shutil.copyfile(images[i], f"./watermarks-validation-donut/{split_name}/" + images[i])
+            # shutil.copyfile(images[i], f"./watermarks-validation-donut/{split_name}/" + images[i])
+
+            url = f"{base_path}/{images[i]}"
+            response = requests.get(url, allow_redirects=True)
+            open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(r.content)
+            # img = Image.open(response.content)
 
 breakpoint()
-generate_correct_data_structure(dataset, "train")
+# generate_correct_data_structure(dataset, "train")
 generate_correct_data_structure(dataset, "validation")
-generate_correct_data_structure(dataset, "")
+# generate_correct_data_structure(dataset, "test")
 
 
 # Will need to disable image_tensors.half() in the model code in main repo
