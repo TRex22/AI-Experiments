@@ -5,3 +5,6 @@ conda activate donut_official
 pip install donut-python
 pip install gradio
 pip install timm==0.6.13
+pip install datasets
+
+conda activate donut_official_new

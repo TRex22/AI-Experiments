@@ -2,3 +2,15 @@ https://github.com/clovaai/donut
 https://towardsdatascience.com/ocr-free-document-understanding-with-donut-1acfbdf099be
 https://colab.research.google.com/drive/1Z4WG8Wunj3HE0CERjt608ALSgSzRC9ig?usp=sharing&pli=1&authuser=2
 https://huggingface.co/docs/transformers/main/en/model_doc/donut
+
+# DataSets
+## Watermarks
+https://www.kaggle.com/datasets/kamino/largescale-common-watermark-dataset
+https://www.kaggle.com/datasets/felicepollano/watermarked-not-watermarked-images
+https://github.com/LAION-AI/watermark-detection
+
+https://huggingface.co/datasets/boomb0om/watermarks-validation/tree/main
+https://huggingface.co/datasets/laion/water-vit-webdataset
+
+## Receipts
+https://github.com/zzzDavid/ICDAR-2019-SROIE
