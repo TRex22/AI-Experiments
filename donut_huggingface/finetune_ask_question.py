@@ -69,7 +69,7 @@ def generate_correct_data_structure(dataset, split_name):
     for item in dataset[split_name]:
         images.append(item["path"])
 
-        line = { "question": "Is there a watermark?", "answer": item["watermark"] }
+        line = { "gt_parses": [{ "question": "Is there a watermark?", "answer": item["watermark"] }] }
         lines.append(line)
 
     with open(f"./watermarks-validation-donut/{split_name}/metadata.jsonl", 'w') as f:
@@ -77,12 +77,12 @@ def generate_correct_data_structure(dataset, split_name):
             line = {"file_name": images[i], "ground_truth": json.dumps(question)}
             f.write(json.dumps(line) + "\n")
 
-            # shutil.copyfile(images[i], f"./watermarks-validation-donut/{split_name}/" + images[i])
 
-            url = f"{base_path}/{images[i]}"
-            response = requests.get(url, allow_redirects=True)
-            open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(response.content)
-            # img = Image.open(response.content)
+            # Download the images
+            # url = f"{base_path}/{images[i]}"
+            # response = requests.get(url, allow_redirects=True)
+            # open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(response.content)
+
 
 # generate_correct_data_structure(dataset, "train")
 # generate_correct_data_structure(dataset, "validation")
