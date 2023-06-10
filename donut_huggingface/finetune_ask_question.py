@@ -73,7 +73,7 @@ def generate_correct_data_structure(dataset, split_name):
         lines.append(line)
 
     with open(f"./watermarks-validation-donut/{split_name}/metadata.jsonl", 'w') as f:
-        for i, question in enumerate(lines):
+        for i, question in tqdm.tqdm(enumerate(lines)):
             line = {"file_name": images[i], "ground_truth": json.dumps(question)}
             f.write(json.dumps(line) + "\n")
 
@@ -84,11 +84,11 @@ def generate_correct_data_structure(dataset, split_name):
             open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(response.content)
             # img = Image.open(response.content)
 
-breakpoint()
 # generate_correct_data_structure(dataset, "train")
-generate_correct_data_structure(dataset, "validation")
+# generate_correct_data_structure(dataset, "validation")
 # generate_correct_data_structure(dataset, "test")
 
+breakpoint()
 
 # Will need to disable image_tensors.half() in the model code in main repo
 def process_image(image_array):
