@@ -1,0 +1,36 @@
+{
+  "lr": "3e-05", 
+  "max_steps": -1, 
+  "verbose": true, 
+  "num_nodes": 1, 
+  "val_check_interval": 1.0, 
+  "pretrained_model_name_or_path": "naver-clova-ix/donut-base", 
+  "check_val_every_n_epochs": 10, 
+  "train_batch_sizes": [
+    1
+  ], 
+  "seed": 2023, 
+  "align_long_axis": false, 
+  "num_training_samples_per_epoch": 120, 
+  "warmup_steps": 10000, 
+  "check_val_every_n_epoch": 10, 
+  "num_workers": 2, 
+  "exp_name": "train_watermark", 
+  "max_length": 128, 
+  "input_size": [
+    1280, 
+    960
+  ], 
+  "val_batch_sizes": [
+    1
+  ], 
+  "sort_json_key": true, 
+  "max_epochs": 7, 
+  "dataset_name_or_paths": [
+    "../../watermarks-validation-donut"
+  ], 
+  "resume_from_checkpoint_path": "None", 
+  "result_path": "./result", 
+  "gradient_clip_val": 0.25, 
+  "exp_version": "20230610_121124"
+}
