@@ -81,7 +81,7 @@ def generate_correct_data_structure(dataset, split_name):
 
             url = f"{base_path}/{images[i]}"
             response = requests.get(url, allow_redirects=True)
-            open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(r.content)
+            open(f"./watermarks-validation-donut/{split_name}/{images[i]}", "wb").write(response.content)
             # img = Image.open(response.content)
 
 breakpoint()
